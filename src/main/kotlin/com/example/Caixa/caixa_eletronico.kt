@@ -11,9 +11,13 @@ class ContaBancaria(val numeroConta: Int, private var saldo: Double) {
         }
     }
 
-    fun sacar(valor: Double) {
+    fun sacar(valor: Double): Double {
         if (valor > 0 && saldo >= valor) {
             saldo -= valor
+            return saldo
+        }
+        else {
+            return 0.0
         }
     }
 }

@@ -7,7 +7,7 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
 
 
-private fun Application.CalculadoraAPI() {
+fun Application.CalculadoraAPI() {
     routing {
 
         // Rota inicial

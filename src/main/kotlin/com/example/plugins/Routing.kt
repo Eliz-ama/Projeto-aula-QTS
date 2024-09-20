@@ -7,52 +7,14 @@ import com.example.Caixa.CaixaAPI
 import com.example.Caixa.ContaBancaria
 import com.example.Calculadora.*
 
+
 // Lista de contas bancárias simulada (em memória)
 val contas = mutableListOf<ContaBancaria>()
 
 fun Application.configureRouting() {
-    routing {
-        // Rota inicial
-        get("/") {
-            call.respondText("Bem-vindo ao Sistema de Caixa e Calculadora!")
-        }
-
-        // Chamando a API do Caixa
-        CaixaAPI()
-
-        // Rotas da Calculadora
-        get("/sum/{a}/{b}") {
-            val a = call.parameters["a"]?.toDoubleOrNull() ?: 0.0
-            val b = call.parameters["b"]?.toDoubleOrNull() ?: 0.0
-            call.respondText(sum(a, b).formatDoubleToString())
-        }
-
-        get("/subtract/{a}/{b}") {
-            val a = call.parameters["a"]?.toDoubleOrNull() ?: 0.0
-            val b = call.parameters["b"]?.toDoubleOrNull() ?: 0.0
-            call.respondText(subtract(a, b).formatDoubleToString())
-        }
-
-        get("/multiply/{a}/{b}") {
-            val a = call.parameters["a"]?.toDoubleOrNull() ?: 0.0
-            val b = call.parameters["b"]?.toDoubleOrNull() ?: 0.0
-            call.respondText(multiply(a, b).formatDoubleToString())
-        }
-
-        get("/divide/{a}/{b}") {
-            val a = call.parameters["a"]?.toDoubleOrNull() ?: 0.0
-            val b = call.parameters["b"]?.toDoubleOrNull() ?: 1.0
-            if (b == 0.0) {
-                call.respondText("Erro: Divisão por zero não permitida.")
-            } else {
-                call.respondText(divide(a, b).formatDoubleToString())
-            }
-        }
-    }
-
-
-
-    }
+    CaixaAPI()
+    CalculadoraAPI()
+}
 
     // Função para formatar os números como string
     fun Double.formatDoubleToString(): String {
