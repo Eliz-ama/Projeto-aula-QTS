@@ -1,42 +1,37 @@
-package com.example.plugins
+package com.example.Calculadora
 
-import io.ktor.server.application.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
-import com.example.Caixa.CaixaAPI
-import com.example.Caixa.ContaBancaria
-import com.example.Calculadora.*
+import io.ktor.server.application.Application
+import io.ktor.server.application.call
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.get
+import io.ktor.server.routing.routing
 
-// Lista de contas bancárias simulada (em memória)
-val contas = mutableListOf<ContaBancaria>()
 
-fun Application.configureRouting() {
+private fun Application.CalculadoraAPI() {
     routing {
+
         // Rota inicial
         get("/") {
             call.respondText("Bem-vindo ao Sistema de Caixa e Calculadora!")
         }
 
-        // Chamando a API do Caixa
-        CaixaAPI()
-
         // Rotas da Calculadora
         get("/sum/{a}/{b}") {
             val a = call.parameters["a"]?.toDoubleOrNull() ?: 0.0
             val b = call.parameters["b"]?.toDoubleOrNull() ?: 0.0
-            call.respondText(sum(a, b).formatDoubleToString())
+            call.respondText(sum(a, b).toString())
         }
 
         get("/subtract/{a}/{b}") {
             val a = call.parameters["a"]?.toDoubleOrNull() ?: 0.0
             val b = call.parameters["b"]?.toDoubleOrNull() ?: 0.0
-            call.respondText(subtract(a, b).formatDoubleToString())
+            call.respondText(subtract(a, b).toString())
         }
 
         get("/multiply/{a}/{b}") {
             val a = call.parameters["a"]?.toDoubleOrNull() ?: 0.0
             val b = call.parameters["b"]?.toDoubleOrNull() ?: 0.0
-            call.respondText(multiply(a, b).formatDoubleToString())
+            call.respondText(multiply(a, b).toString())
         }
 
         get("/divide/{a}/{b}") {
@@ -45,16 +40,8 @@ fun Application.configureRouting() {
             if (b == 0.0) {
                 call.respondText("Erro: Divisão por zero não permitida.")
             } else {
-                call.respondText(divide(a, b).formatDoubleToString())
+                call.respondText(divide(a, b).toString())
             }
         }
     }
-
-
-
-    }
-
-    // Função para formatar os números como string
-    fun Double.formatDoubleToString(): String {
-        return "%.2f".format(this)
-    }
+}
